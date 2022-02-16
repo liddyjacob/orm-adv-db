@@ -4,6 +4,7 @@ Add a new item..
 <hr/>
 <form action="/add" method="post">
   <p>New Item:<input name="description"/></p>
+  <p>Person: <input name="person"/></p>
   <p><button type="submit">Submit</button></p>
 </form>
 <hr/>

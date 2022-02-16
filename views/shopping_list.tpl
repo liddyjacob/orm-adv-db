@@ -3,7 +3,7 @@
 <table>
 % for item in shopping_list:
   <tr>
-    <td>{{item.id}}</td><td>{{item.description}}</td>
+    <td>{{item.id}}</td><td>{{item.description}}({{item.person.name}})</td>
     <td><a href="/delete/{{item.id}}">Delete</a></td>
     <td><a href="/edit/{{item.id}}">Edit</a></td>
   </tr>
