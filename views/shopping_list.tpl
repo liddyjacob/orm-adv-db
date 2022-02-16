@@ -3,9 +3,9 @@
 <table>
 % for item in shopping_list:
   <tr>
-    <td>{{item['id']}}</td><td>{{item['desc']}}</td>
-    <td><a href="/delete/{{item['id']}}">Delete</a></td>
-    <td><a href="/edit/{{item['id']}}">Edit</a></td>
+    <td>{{item.id}}</td><td>{{item.description}}</td>
+    <td><a href="/delete/{{item.id}}">Delete</a></td>
+    <td><a href="/edit/{{item.id}}">Edit</a></td>
   </tr>
 % end
 </table>

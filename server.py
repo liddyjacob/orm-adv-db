@@ -1,15 +1,12 @@
 from bottle import route, run, template, get, post, request, response, redirect
 import sqlite3
+from models import List
 
 connection = sqlite3.connect("shopping_list.db")
 
 @route('/list')
 def get_list():
-    global connection
-    cursor = connection.cursor()
-    items = cursor.execute("select id, description from list")
-    items = list(items)
-    shopping_list = [{"id":item[0], "desc":item[1]} for item in items]
+    shopping_list = [item for item in List.select()]
     return template('shopping_list.tpl', shopping_list=shopping_list)
 
 @get("/add")
@@ -20,10 +17,8 @@ def get_add():
 def post_add():
     description = request.forms.get("description")
     print(f"post was called. description={description}")
-    global connection
-    cursor = connection.cursor()
-    items = cursor.execute(f"insert into list (description) values ('{description}')")
-    connection.commit()
+    List.create(description=description) # create new item and immediently save.
+    # alternative - List.create(description=description) 
     redirect("/list")
 
 @route("/delete/<id>")
