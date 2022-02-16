@@ -23,10 +23,7 @@ def post_add():
 
 @route("/delete/<id>")
 def get_delete(id):
-    global connection
-    cursor = connection.cursor()
-    items = cursor.execute(f"delete from list where id={id}")
-    connection.commit()
+    List.get(List.id==id).delete_instance()
     redirect("/list")
 
 @route("/edit/<id>")
