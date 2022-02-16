@@ -16,7 +16,6 @@ def get_add():
 @post("/add")
 def post_add():
     description = request.forms.get("description")
-    print(f"post was called. description={description}")
     List.create(description=description) # create new item and immediently save.
     # alternative - List.create(description=description) 
     redirect("/list")
@@ -28,23 +27,15 @@ def get_delete(id):
 
 @route("/edit/<id>")
 def get_edit(id):
-    global connection
-    cursor = connection.cursor()
-    items = cursor.execute(f"select description from list where id={id}")
-    items = list(items)
-    if len(items) != 1:
-        redirect("/list")
-    description = items[0][0]
-    print(description)
-    return template('edit_item.tpl', id=id, description=description)
+    item = List.get(List.id==id)
+    return template('edit_item.tpl', id=id, description=item.description)
 
 @post("/edit/<id>")
 def post_edit(id):
     description = request.forms.get("description")
-    global connection
-    cursor = connection.cursor()
-    items = cursor.execute(f"update list set description='{description}' where id={id}")
-    connection.commit()
+    item = List.get(List.id==id)
+    item.description = description
+    item.save()
     redirect("/list")
 
 run(host='localhost', port=8080)
